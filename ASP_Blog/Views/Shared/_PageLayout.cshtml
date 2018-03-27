@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <!-- NAVBAR AND FOOTER -->
+    @{
+        Html.RenderPartial("~/Views/Shared/_Navbar.cshtml");
+
+        Html.RenderPartial("~/Views/Shared/_Footer.cshtml");
+    }
+
+    <br />
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          @RenderSection("content", required: false)
+        </div>
+        <div class="col-md-4">
+            <h3>@ViewBag.Title</h3>
+            <p>@ViewBag.Text</p>
+            <br />
+
+            @RenderSection("sidebar", required: false)
+        </div>
+      </div>
+    </div>
+
+    @RenderBody() 
+
+    <br />
+    <br />
+    <br />
+
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>
