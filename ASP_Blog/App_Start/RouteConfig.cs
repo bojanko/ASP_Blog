@@ -19,6 +19,12 @@ namespace ASP_Blog
                 url: "{action}",
                 defaults: new { controller = "Page", action = "Home" }
             );
+            /*DUMMY DATA ROUTE*/
+            routes.MapRoute(
+                name: "DummyData",
+                url: "Dummy/Insert",
+                defaults: new { controller = "DummyData", action = "DummyData" }
+            );
         }
     }
 }
