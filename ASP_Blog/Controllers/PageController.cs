@@ -5,9 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using ASP_Blog.Models;
 using ASP_Blog.Repository;
+using ASP_Blog.Filters;
 
 namespace ASP_Blog.Controllers
 {
+    [LogFilter]
     public class PageController : Controller
     {
         PageRepository page_rep;
