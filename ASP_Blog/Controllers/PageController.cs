@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ASP_Blog.Models;
 using ASP_Blog.Repository;
 using ASP_Blog.Filters;
+using ASP_Blog.Helpers;
 
 namespace ASP_Blog.Controllers
 {
@@ -13,14 +14,14 @@ namespace ASP_Blog.Controllers
     public class PageController : Controller
     {
         PageRepository page_rep;
+        PostRepository post_rep;
 
         public PageController()
         {
             page_rep = new PageRepository();
+            post_rep = new PostRepository();
         }
 
-        //
-        // GET: /Home/
 
         public ActionResult Home()
         {
@@ -29,7 +30,32 @@ namespace ASP_Blog.Controllers
             ViewBag.Title = home.title;
             ViewBag.Text = home.text;
 
+            //GET POSTS
+            ViewBag.Posts = post_rep.getPostsByPage(1, 5);
+            //SET PAGINATOR
+            Paginator<PostModel> paginator = new Paginator<PostModel>();
+            paginator.setData(post_rep.getAllPosts(), 1, 5);
+            ViewBag.Paginator = paginator;
+
             return View();
+        }
+
+        /*PAGES OF PAGINATED POSTS*/
+        public ActionResult Page(int page)
+        {
+            PageModel home = page_rep.getPageByName("home");
+            ViewBag.Page = home.pageName;
+            ViewBag.Title = home.title;
+            ViewBag.Text = home.text;
+
+            //GET POSTS
+            ViewBag.Posts = post_rep.getPostsByPage(page, 5);
+            //SET PAGINATOR
+            Paginator<PostModel> paginator = new Paginator<PostModel>();
+            paginator.setData(post_rep.getAllPosts(), page, 5);
+            ViewBag.Paginator = paginator;
+
+            return View("~/Views/Page/Home.cshtml");
         }
 
         public ActionResult About()

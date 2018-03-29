@@ -11,10 +11,13 @@ namespace ASP_Blog.Controllers
     public class DummyDataController : Controller
     {
         PageRepository page_rep;
+        PostRepository post_rep;
+
 
         public DummyDataController()
         {
             page_rep = new PageRepository();
+            post_rep = new PostRepository();
         }
 
         //
@@ -23,7 +26,6 @@ namespace ASP_Blog.Controllers
         public ActionResult DummyData()
         {
             /*INSERT INITIAL PAGE DATA*/
-            /*
             PageModel home = new PageModel();
             home.pageName = "home";
             home.title = "Welcome to home page!";
@@ -41,9 +43,18 @@ namespace ASP_Blog.Controllers
             contact.title = "Welcome to contact page!";
             contact.text = "This is contact page of ASP.NET powered blog!";
             page_rep.addPage(contact);
-            */
 
-            return View();
+            /*INSERT POSTS*/
+            for (int i = 1; i < 23; i++)
+            {
+                PostModel post = new PostModel();
+                post.title = "Example post " + i;
+                post.text = "This is example post " + i;
+
+                post_rep.addPost(post);
+            }
+
+                return View();
         }
 
     }

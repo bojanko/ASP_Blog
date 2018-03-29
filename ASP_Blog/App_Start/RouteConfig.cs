@@ -16,8 +16,14 @@ namespace ASP_Blog
             /*PAGES ROUTE*/
             routes.MapRoute(
                 name: "Pages",
-                url: "{action}",
-                defaults: new { controller = "Page", action = "Home" }
+                url: "{action}/{page}",
+                defaults: new { controller = "Page", action = "Home", page = UrlParameter.Optional }
+            );
+            /*POSTS ROUTE*/
+            routes.MapRoute(
+                name: "Posts",
+                url: "Posts/{post}",
+                defaults: new { controller = "Page", action = "ShowPost", page = 1}
             );
             /*DUMMY DATA ROUTE*/
             routes.MapRoute(
