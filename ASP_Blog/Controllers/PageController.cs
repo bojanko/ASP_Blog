@@ -78,5 +78,18 @@ namespace ASP_Blog.Controllers
             return View();
         }
 
+        public ActionResult ShowPost(int id)
+        {
+            /*GET POST*/
+            PostModel post = post_rep.getPostById(id);
+
+            ViewBag.Page = "post";
+            ViewBag.Title = "";
+            ViewBag.Text = "";
+            ViewBag.Post = post;
+
+            return View();
+        }
+
     }
 }

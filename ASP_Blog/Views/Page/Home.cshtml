@@ -8,7 +8,7 @@
         <h2>@post.title</h2>
         <p>@post.text</p>
         
-        <a class="btn btn-primary btn-block" href="">Show post</a>
+        <a class="btn btn-primary btn-block" href="@Url.Action("ShowPost", "Page", new { id = post.id })">Show post</a>
         <br /><br />
     }
 

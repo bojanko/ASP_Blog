@@ -29,11 +29,12 @@
           @RenderSection("content", required: false)
         </div>
         <div class="col-md-4">
-            @if (ViewBag.Page != "about"){
+            @if (ViewBag.Page != "about" && ViewBag.Page != "post")
+            {
                 <h3>@ViewBag.Title</h3>
                 <p>@ViewBag.Text</p>
+                <br />
             }
-            <br />
 
             @RenderSection("sidebar", required: false)
         </div>

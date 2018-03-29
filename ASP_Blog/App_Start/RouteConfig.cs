@@ -13,17 +13,17 @@ namespace ASP_Blog
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            /*POSTS ROUTE*/
+            routes.MapRoute(
+                name: "Posts",
+                url: "ShowPost/{id}",
+                defaults: new { controller = "Page", action = "ShowPost" }
+            );
             /*PAGES ROUTE*/
             routes.MapRoute(
                 name: "Pages",
                 url: "{action}/{page}",
                 defaults: new { controller = "Page", action = "Home", page = UrlParameter.Optional }
-            );
-            /*POSTS ROUTE*/
-            routes.MapRoute(
-                name: "Posts",
-                url: "Posts/{post}",
-                defaults: new { controller = "Page", action = "ShowPost", page = 1}
             );
             /*DUMMY DATA ROUTE*/
             routes.MapRoute(
