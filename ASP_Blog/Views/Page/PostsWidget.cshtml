@@ -1,0 +1,7 @@
+﻿@{
+    Layout = null;
+}
+
+@foreach(var post in ViewBag.Posts){
+    <h3><a class="text-dark" href="@Url.Action("ShowPost", "Page", new { id = post.id })">@post.title</a></h3>
+}

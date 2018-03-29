@@ -91,5 +91,14 @@ namespace ASP_Blog.Controllers
             return View();
         }
 
+        /*LAST 3 POSTS WIDGET*/
+        public ActionResult PostsWidget()
+        {
+            //GET POSTS
+            ViewBag.Posts = post_rep.getLastN(3);
+
+            return View();
+        }
+
     }
 }

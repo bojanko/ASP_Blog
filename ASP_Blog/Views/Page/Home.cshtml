@@ -5,7 +5,7 @@
 @section content {
     @foreach (var post in ViewBag.Posts)
     {
-        <h2>@post.title</h2>
+        <h2><a class="text-dark" href="@Url.Action("ShowPost", "Page", new { id = post.id })">@post.title</a></h2>
         <p>@post.text</p>
         
         <a class="btn btn-primary btn-block" href="@Url.Action("ShowPost", "Page", new { id = post.id })">Show post</a>
@@ -54,5 +54,6 @@
 }
 
 @section sidebar {
-    zzz
+    <h3>Latest posts</h3>
+    @{Html.RenderAction("PostsWidget", "Page");}
 }

@@ -49,5 +49,10 @@ namespace ASP_Blog.Repository
             return all_posts.GetRange((page - 1) * per_page,
                 all_posts.Count - ((page - 1) * per_page) >= per_page ? per_page : all_posts.Count - ((page - 1) * per_page)); 
         }
+
+        public List<PostModel> getLastN(int n)
+        {
+            return (from p in context.Posts orderby p.id descending select p).Take(n).ToList<PostModel>();
+        }
     }
 }
