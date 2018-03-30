@@ -7,11 +7,12 @@ using ASP_Blog.Models;
 using ASP_Blog.Repository;
 using ASP_Blog.Filters;
 using ASP_Blog.Helpers;
+using System.Diagnostics;
 
 namespace ASP_Blog.Controllers
 {
     [LogFilter]
-    public class PageController : Controller
+    public class PageController : BaseController
     {
         PageRepository page_rep;
         PostRepository post_rep;
@@ -22,13 +23,21 @@ namespace ASP_Blog.Controllers
             post_rep = new PostRepository();
         }
 
+        private void setPageInfo(string page)
+        {
+            if (page != "null")
+            {
+                PageModel p_model = page_rep.getPageByName(page);
+                ViewBag.Page = p_model.pageName;
+                ViewBag.Title = p_model.title;
+                ViewBag.Text = p_model.text;
+            }
+        }
+
 
         public ActionResult Home()
         {
-            PageModel home = page_rep.getPageByName("home");
-            ViewBag.Page = home.pageName;
-            ViewBag.Title = home.title;
-            ViewBag.Text = home.text;
+            setPageInfo("home");
 
             //GET POSTS
             ViewBag.Posts = post_rep.getPostsByPage(1, 5);
@@ -43,10 +52,7 @@ namespace ASP_Blog.Controllers
         /*PAGES OF PAGINATED POSTS*/
         public ActionResult Page(int page)
         {
-            PageModel home = page_rep.getPageByName("home");
-            ViewBag.Page = home.pageName;
-            ViewBag.Title = home.title;
-            ViewBag.Text = home.text;
+            setPageInfo("home");
 
             //GET POSTS
             ViewBag.Posts = post_rep.getPostsByPage(page, 5);
@@ -60,22 +66,47 @@ namespace ASP_Blog.Controllers
 
         public ActionResult About()
         {
-            PageModel about = page_rep.getPageByName("about");
-            ViewBag.Page = about.pageName;
-            ViewBag.Title = about.title;
-            ViewBag.Text = about.text;
+            setPageInfo("about");
 
             return View();
         }
 
+        [HttpGet]
         public ActionResult Contact()
         {
-            PageModel contact = page_rep.getPageByName("contact");
-            ViewBag.Page = contact.pageName;
-            ViewBag.Title = contact.title;
-            ViewBag.Text = contact.text;
+            setPageInfo("contact");
 
-            return View();
+            MessageModel message = new MessageModel();
+
+            if (TempData["success"] != null)
+            {
+                ViewBag.Success = TempData["success"];
+            }
+
+            return View(message);
+        }
+        /*HANDLE FORM SUBMIT*/
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Contact(MessageModel mss)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Mailer.Mail(mss))
+                {
+                    TempData["success"] = "true";
+                }
+                else
+                {
+                    TempData["success"] = "false";
+                }
+
+                return RedirectToAction("Contact", "Page");
+            }
+
+            setPageInfo("contact");
+
+            return View(mss);
         }
 
         public ActionResult ShowPost(int id)
@@ -83,9 +114,7 @@ namespace ASP_Blog.Controllers
             /*GET POST*/
             PostModel post = post_rep.getPostById(id);
 
-            ViewBag.Page = "post";
-            ViewBag.Title = "";
-            ViewBag.Text = "";
+            setPageInfo("null");
             ViewBag.Post = post;
 
             return View();

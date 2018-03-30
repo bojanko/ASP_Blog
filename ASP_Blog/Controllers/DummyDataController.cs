@@ -8,7 +8,7 @@ using ASP_Blog.Models;
 
 namespace ASP_Blog.Controllers
 {
-    public class DummyDataController : Controller
+    public class DummyDataController : BaseController
     {
         PageRepository page_rep;
         PostRepository post_rep;

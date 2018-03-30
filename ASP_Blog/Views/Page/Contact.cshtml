@@ -1,9 +1,51 @@
-﻿@{
+﻿@model ASP_Blog.Models.MessageModel
+
+@{
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
 @section content {
-    ttt
+    @if(ViewBag.Success == "true"){
+        <div class="alert alert-success">Message sent successfully!</div>
+    }
+    @if(ViewBag.Success == "false"){
+        <div class="alert alert-danger">Something went wrong!</div>
+    }
+
+    @using(Html.BeginForm()){
+        @Html.AntiForgeryToken()
+        
+        <fieldset>
+            @if(ViewData.ModelState["name"] != null && ViewData.ModelState["name"].Errors.Any()){
+                <div class="alert alert-danger">
+                    @Html.ValidationMessageFor(m => m.name)
+                </div>
+            }
+            <h3>@Html.LabelFor(m => m.name)</h3>
+            @Html.TextBoxFor(m => m.name, new { @class = "form-control" })
+
+            @if(ViewData.ModelState["email"] != null && ViewData.ModelState["email"].Errors.Any()){
+                <br />
+                <div class="alert alert-danger">
+                @Html.ValidationMessageFor(m => m.email)
+                </div>
+            }
+            <h3>@Html.LabelFor(m => m.email)</h3>
+            @Html.TextBoxFor(m => m.email, new { @class = "form-control" })
+            
+            @if(ViewData.ModelState["message"] != null && ViewData.ModelState["message"].Errors.Any()){
+                <br />
+                <div class="alert alert-danger">
+                @Html.ValidationMessageFor(m => m.message)
+                </div>
+            }
+            <h3>@Html.LabelFor(m => m.message)</h3>
+            @Html.TextAreaFor(m => m.message, new { @class = "form-control", rows = 8 })
+        </fieldset>
+        
+        <br />
+        <input class="btn btn-primary btn-block" type="submit" value="Send message" />
+    }
 }
 
 @section sidebar {
