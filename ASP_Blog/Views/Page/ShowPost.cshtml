@@ -4,9 +4,17 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
+@using System.Text.RegularExpressions
+@helper Encoder(string str)
+{
+    str = Regex.Replace(str, @"<[^>]*>", String.Empty);
+    str = str.Replace("\r\n", "<br />").Replace("\n", "<br />").Replace("\r", "<br />");
+    @Html.Raw(str)
+}
+
 @section content {
     <h2>@ViewBag.Post.title</h2>
-    <p>@ViewBag.Post.text</p>
+    <p>@Encoder(ViewBag.Post.text)</p>
     
     <br />
     <h2>Comments</h2>
@@ -15,7 +23,7 @@
     @foreach(var comment in ViewBag.Comments){
         if(comment.allowed != null && comment.allowed){
             <h3>@comment.name</h3>
-            <p>@comment.text</p>
+            <p>@Encoder(@comment.text)</p>
             <br />
         }
     }

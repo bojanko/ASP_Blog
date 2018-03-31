@@ -2,11 +2,19 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
+@using System.Text.RegularExpressions
+@helper Encoder(string str)
+{
+    str = Regex.Replace(str, @"<[^>]*>", String.Empty);
+    str = str.Replace("\r\n", "<br />").Replace("\n", "<br />").Replace("\r", "<br />");
+    @Html.Raw(str)
+}
+
 @section content {
     @foreach (var post in ViewBag.Posts)
     {
         <h2><a class="text-dark" href="@Url.Action("ShowPost", "Page", new { id = post.id })">@post.title</a></h2>
-        <p>@post.text</p>
+        <p>@Encoder(post.text)</p>
         
         <a class="btn btn-primary btn-block" href="@Url.Action("ShowPost", "Page", new { id = post.id })">Show post</a>
         <br /><br />
