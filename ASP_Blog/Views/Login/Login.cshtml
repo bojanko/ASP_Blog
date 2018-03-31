@@ -1,0 +1,37 @@
+﻿@model ASP_Blog.Models.LoginViewModel
+
+@{
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section content {
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <fieldset>
+            @if(ViewData.ModelState["username"] != null && ViewData.ModelState["username"].Errors.Any()){
+                <div class="alert alert-danger">
+                    @Html.ValidationMessageFor(m => m.username)
+                </div>
+            }
+            <h3>@Html.LabelFor(m => m.username)</h3>
+            @Html.TextBoxFor(m => m.username, new { @class = "form-control" })
+
+            @if(ViewData.ModelState["password"] != null && ViewData.ModelState["password"].Errors.Any()){
+                <br />
+                <div class="alert alert-danger">
+                    @Html.ValidationMessageFor(m => m.password)
+                </div>
+            }
+            <h3>@Html.LabelFor(m => m.password)</h3>
+            @Html.PasswordFor(m => m.password, new { @class = "form-control" })
+
+            <br />
+            <input class="btn btn-primary btn-block" type="submit" value="Log in" />
+        </fieldset>
+    }
+}
+
+@section sidebar {
+    <p>Use this page to log in with your credentials.</p>
+}

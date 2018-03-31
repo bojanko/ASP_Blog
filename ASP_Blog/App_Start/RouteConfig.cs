@@ -19,6 +19,12 @@ namespace ASP_Blog
                 url: "ShowPost/{id}",
                 defaults: new { controller = "Page", action = "ShowPost" }
             );
+            /*LOGIN ROUTE*/
+            routes.MapRoute(
+                name: "Login",
+                url: "Login/{action}",
+                defaults: new { controller = "Login", action = "Login"}
+            );
             /*PAGES ROUTE*/
             routes.MapRoute(
                 name: "Pages",
@@ -28,7 +34,7 @@ namespace ASP_Blog
             /*DUMMY DATA ROUTE*/
             routes.MapRoute(
                 name: "DummyData",
-                url: "Dummy/Insert",
+                url: "Dummy/Data/Insert",
                 defaults: new { controller = "DummyData", action = "DummyData" }
             );
         }

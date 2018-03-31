@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using ASP_Blog.Repository;
 using ASP_Blog.Models;
 
@@ -54,7 +55,13 @@ namespace ASP_Blog.Controllers
                 post_rep.addPost(post);
             }
 
-                return View();
+            /*ADD ADMIN USER*/
+            Membership.CreateUser("administrator", "password");
+            Roles.CreateRole("ROLE_USER");
+            Roles.CreateRole("ROLE_ADMIN");
+            Roles.AddUserToRoles("administrator", new string[] {"ROLE_USER", "ROLE_ADMIN"});
+
+            return View();
         }
 
     }

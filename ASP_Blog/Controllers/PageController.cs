@@ -7,11 +7,11 @@ using ASP_Blog.Models;
 using ASP_Blog.Repository;
 using ASP_Blog.Filters;
 using ASP_Blog.Helpers;
-using System.Diagnostics;
 
 namespace ASP_Blog.Controllers
 {
     [LogFilter]
+    [Authorize]
     public class PageController : BaseController
     {
         PageRepository page_rep;
