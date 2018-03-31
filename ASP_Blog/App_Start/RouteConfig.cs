@@ -30,8 +30,8 @@ namespace ASP_Blog
             /*PROFILE ROUTE*/
             routes.MapRoute(
                 name: "Profile",
-                url: "Profile/{action}",
-                defaults: new { controller = "Profile", action = "UserProfile" }
+                url: "Profile/{action}/{username}",
+                defaults: new { controller = "Profile", action = "UserProfile", username = UrlParameter.Optional }
             );
 
             /*PAGES ROUTE*/

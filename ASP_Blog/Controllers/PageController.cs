@@ -11,7 +11,6 @@ using ASP_Blog.Helpers;
 namespace ASP_Blog.Controllers
 {
     [LogFilter]
-    [Authorize]
     public class PageController : BaseController
     {
         PageRepository page_rep;

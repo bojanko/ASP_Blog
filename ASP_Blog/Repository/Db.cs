@@ -16,5 +16,6 @@ namespace ASP_Blog.Repository
         public DbSet<PageModel> Pages { get; set; }
         public DbSet<PostModel> Posts { get; set; }
         public DbSet<CommentModel> Comments { get; set; }
+        public DbSet<AdminRequestModel> AdminRequests { get; set; }
     }
 }

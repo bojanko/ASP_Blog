@@ -60,5 +60,19 @@
 }
 
 @section sidebar {
-    <p>Manage your user profile.</p>
+    <h1>User profile</h1>
+        <p>Manage your user profile.</p>
+
+    <h2>Granted roles</h2>
+
+    @foreach(var role in Roles.GetRolesForUser(Membership.GetUser().UserName)){
+        <p>@role.Replace("ROLE_", "")</p>
+    }
+
+    <br />
+
+    @if(ViewBag.AdminRequest != null && ViewBag.AdminRequest == true){
+        <a href="@Url.Action("AdminRequest", "Profile", new { username = Membership.GetUser().UserName })"
+            class="btn btn-primary btn-block">Send admin request</a>
+    }
 }
