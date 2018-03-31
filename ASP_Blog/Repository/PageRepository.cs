@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 using ASP_Blog.Repository;
 using ASP_Blog.Models;
 
@@ -22,8 +23,9 @@ namespace ASP_Blog.Repository
             context.SaveChanges();
         }
 
-        public void updatePage()
+        public void updatePage(PageModel p)
         {
+            context.Entry<PageModel>(p).State = EntityState.Modified;
             context.SaveChanges();
         }
 

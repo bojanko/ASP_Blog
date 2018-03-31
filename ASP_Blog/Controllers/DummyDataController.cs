@@ -11,8 +11,8 @@ namespace ASP_Blog.Controllers
 {
     public class DummyDataController : BaseController
     {
-        PageRepository page_rep;
-        PostRepository post_rep;
+        private PageRepository page_rep;
+        private PostRepository post_rep;
 
 
         public DummyDataController()

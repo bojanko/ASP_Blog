@@ -22,7 +22,8 @@
                 </div>
             }
             <h3>@Html.LabelFor(m => m.name)</h3>
-            @Html.TextBoxFor(m => m.name, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.name, new { @class = "form-control",
+                Value = Membership.GetUser() != null ? Membership.GetUser().UserName : null  })
 
             @if(ViewData.ModelState["email"] != null && ViewData.ModelState["email"].Errors.Any()){
                 <br />

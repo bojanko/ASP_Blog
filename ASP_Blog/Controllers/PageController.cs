@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ASP_Blog.Models;
 using ASP_Blog.Repository;
+using System.Web.Security;
 using ASP_Blog.Filters;
 using ASP_Blog.Helpers;
 
@@ -13,13 +14,15 @@ namespace ASP_Blog.Controllers
     [LogFilter]
     public class PageController : BaseController
     {
-        PageRepository page_rep;
-        PostRepository post_rep;
+        private PageRepository page_rep;
+        private PostRepository post_rep;
+        private CommentRepository com_rep;
 
         public PageController()
         {
             page_rep = new PageRepository();
             post_rep = new PostRepository();
+            com_rep = new CommentRepository();
         }
 
         private void setPageInfo(string page)
@@ -108,13 +111,44 @@ namespace ASP_Blog.Controllers
             return View(mss);
         }
 
+        [HttpGet]
         public ActionResult ShowPost(int id)
         {
             /*GET POST*/
-            PostModel post = post_rep.getPostById(id);
+            PostModel post = post_rep.getPostByIdWithComments(id);
 
             setPageInfo("null");
             ViewBag.Post = post;
+            ViewBag.Comments = post.comments;
+
+            return View();
+        }
+        /*HANDLE COMMENT SUBMIT*/
+        [HttpPost]
+        [Authorize]
+        public ActionResult ShowPost(CommentModel com, int id)
+        {
+            /*GET POST*/
+            PostModel post = post_rep.getPostByIdWithComments(id);
+
+            if (ModelState.IsValid)
+            {
+                /*ADD COMMENT*/
+                com.post = post;
+                if (Roles.IsUserInRole("ROLE_ADMIN"))
+                {
+                    com.allowed = true;
+                }
+
+                post.comments.Add(com);
+                com_rep.addComment(com);
+
+                return RedirectToAction("ShowPost", "Page");
+            }
+
+            setPageInfo("null");
+            ViewBag.Post = post;
+            ViewBag.Comments = post.comments;
 
             return View();
         }

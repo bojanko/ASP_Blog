@@ -12,7 +12,7 @@ namespace ASP_Blog.Controllers
     [Authorize]
     public class ProfileController : BaseController
     {
-        AdminRequestRepository req_rep;
+        private AdminRequestRepository req_rep;
 
         public ProfileController()
         {

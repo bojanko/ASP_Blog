@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 using ASP_Blog.Repository;
 using ASP_Blog.Models;
 
@@ -22,8 +23,13 @@ namespace ASP_Blog.Repository
             context.SaveChanges();
         }
 
-        public void updatePost()
+        public void updatePost(PostModel p)
         {
+            foreach (CommentModel c in p.comments)
+            {
+                context.Entry<CommentModel>(c).State = EntityState.Unchanged;
+            }
+            context.Entry<PostModel>(p).State = EntityState.Modified;
             context.SaveChanges();
         }
 
@@ -36,6 +42,11 @@ namespace ASP_Blog.Repository
         public PostModel getPostById(int id)
         {
             return context.Posts.Find(id);
+        }
+
+        public PostModel getPostByIdWithComments(int id)
+        {
+            return (from p in context.Posts.Include("comments") where p.id == id select p).Single();
         }
 
         public List<PostModel> getAllPosts()

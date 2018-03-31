@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 using ASP_Blog.Repository;
 using ASP_Blog.Models;
 
@@ -18,12 +19,15 @@ namespace ASP_Blog.Repository
 
         public void addComment(CommentModel c)
         {
+            context.Entry<PostModel>(c.post).State = EntityState.Modified;
             context.Comments.Add(c);
             context.SaveChanges();
         }
 
-        public void updateComment()
+        public void updateComment(CommentModel c)
         {
+            context.Entry<PostModel>(c.post).State = EntityState.Unchanged;
+            context.Entry<CommentModel>(c).State = EntityState.Modified;
             context.SaveChanges();
         }
 
