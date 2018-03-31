@@ -19,18 +19,28 @@ namespace ASP_Blog
                 url: "ShowPost/{id}",
                 defaults: new { controller = "Page", action = "ShowPost" }
             );
+
             /*LOGIN ROUTE*/
             routes.MapRoute(
                 name: "Login",
                 url: "Login/{action}",
                 defaults: new { controller = "Login", action = "Login"}
             );
+
+            /*PROFILE ROUTE*/
+            routes.MapRoute(
+                name: "Profile",
+                url: "Profile/{action}",
+                defaults: new { controller = "Profile", action = "UserProfile" }
+            );
+
             /*PAGES ROUTE*/
             routes.MapRoute(
                 name: "Pages",
                 url: "{action}/{page}",
                 defaults: new { controller = "Page", action = "Home", page = UrlParameter.Optional }
             );
+
             /*DUMMY DATA ROUTE*/
             routes.MapRoute(
                 name: "DummyData",
