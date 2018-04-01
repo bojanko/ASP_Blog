@@ -1,15 +1,67 @@
 ﻿@{
-    ViewBag.Title = "Welcome to home page!";
-    ViewBag.Text = "This is home page of ASP.NET powered blog!";
-    ViewBag.Page = "home";
-    
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
+@using System.Text.RegularExpressions
+@helper Encoder(string str)
+{
+    str = Regex.Replace(str, @"<[^>]*>", String.Empty);
+    str = str.Replace("\r\n", "<br />").Replace("\n", "<br />").Replace("\r", "<br />");
+    @Html.Raw(str)
+}
+
 @section content {
-    ttt
+    @foreach (var post in ViewBag.Posts)
+    {
+        <h2><a class="text-dark" href="@Url.Action("ShowPost", "Page", new { id = post.id })">@post.title</a></h2>
+        <p>@Encoder(post.text)</p>
+        
+        <a class="btn btn-primary btn-block" href="@Url.Action("ShowPost", "Page", new { id = post.id })">Show post</a>
+        <br /><br />
+    }
+
+<nav aria-label="paginate_me">
+  <ul class="pagination">
+    @if(ViewBag.Paginator.getPrev() != 0){
+        <li class="page-item">
+          <a class="page-link" href="
+              @(ViewBag.Paginator.getPrev() == 1 ? Url.Action("Home", "Page", null)
+              : Url.Action("Page", "Page", new { page = ViewBag.Paginator.getPrev() }))
+          ">Previous</a>
+        </li>
+    }
+
+    @if(ViewBag.Paginator.getL1() != 0){
+        <li class="page-item@(ViewBag.Paginator.getActive() == "l1" ? " active" : "")">
+            <a class="page-link" href="
+                @(ViewBag.Paginator.getL1() == 1 ? Url.Action("Home", "Page", null)
+                : Url.Action("Page", "Page", new { page = ViewBag.Paginator.getL1() }))
+            ">
+            @ViewBag.Paginator.getL1()</a></li>
+    }
+
+    @if(ViewBag.Paginator.getL2() != 0){
+        <li class="page-item@(ViewBag.Paginator.getActive() == "l2" ? " active" : "")">
+            <a class="page-link" href="@Url.Action("Page", "Page", new { page = ViewBag.Paginator.getL2() })">
+                @ViewBag.Paginator.getL2()</a></li>
+    }
+
+    @if(ViewBag.Paginator.getL3() != 0){
+        <li class="page-item"><a class="page-link" href="@Url.Action("Page", "Page", new { page = ViewBag.Paginator.getL3() })">
+            @ViewBag.Paginator.getL3()</a></li>
+    }
+
+    @if(ViewBag.Paginator.getNext() != 0){
+        <li class="page-item">
+          <a class="page-link" href="@Url.Action("Page", "Page", new { page = ViewBag.Paginator.getNext() })">Next</a>
+        </li>
+    }
+  </ul>
+</nav>
+
 }
 
 @section sidebar {
-    zzz
+    <h3>Latest posts</h3>
+    @{Html.RenderAction("PostsWidget", "Page");}
 }

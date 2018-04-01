@@ -9,7 +9,7 @@
 <body>
     <!-- NAVBAR AND FOOTER -->
     @{
-        Html.RenderPartial("~/Views/Shared/_Navbar.cshtml");
+        Html.RenderPartial("~/Views/Shared/_NavbarAdmin.cshtml");
 
         Html.RenderPartial("~/Views/Shared/_Footer.cshtml");
     }
@@ -20,22 +20,9 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8">
-          @if (ViewBag.Page == "about"){
-              <h3>@ViewBag.Title</h3>
-              <p>@ViewBag.Text</p>
-              <br />
-          }
-
           @RenderSection("content", required: false)
         </div>
         <div class="col-md-4">
-            @if (ViewBag.Page != "about" && ViewBag.Page != "post")
-            {
-                <h3>@ViewBag.Title</h3>
-                <p>@ViewBag.Text</p>
-                <br />
-            }
-
             @RenderSection("sidebar", required: false)
         </div>
       </div>

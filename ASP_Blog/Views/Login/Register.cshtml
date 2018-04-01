@@ -1,0 +1,48 @@
+﻿@model ASP_Blog.Models.RegisterViewModel
+
+@{
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@section content {
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <fieldset>
+            @if(ViewData.ModelState["username"] != null && ViewData.ModelState["username"].Errors.Any()){
+                <div class="alert alert-danger">
+                    @Html.ValidationMessageFor(m => m.username)
+                </div>
+            }
+            <h3>@Html.LabelFor(m => m.username)</h3>
+            @Html.TextBoxFor(m => m.username, new { @class = "form-control" })
+
+            @if(ViewData.ModelState["password"] != null && ViewData.ModelState["password"].Errors.Any()){
+                <br />
+                <div class="alert alert-danger">
+                    @Html.ValidationMessageFor(m => m.password)
+                </div>
+            }
+            <h3>@Html.LabelFor(m => m.password)</h3>
+            @Html.PasswordFor(m => m.password, new { @class = "form-control" })
+
+            @if (ViewData.ModelState["confirm_password"] != null && ViewData.ModelState["confirm_password"].Errors.Any())
+            {
+                <br />
+                <div class="alert alert-danger">
+                    @Html.ValidationMessageFor(m => m.confirm_password)
+                </div>
+            }
+            <h3>@Html.LabelFor(m => m.confirm_password)</h3>
+            @Html.PasswordFor(m => m.confirm_password, new { @class = "form-control" })
+
+
+            <br />
+            <input class="btn btn-primary btn-block" type="submit" value="Register" />
+        </fieldset>
+    }
+}
+
+@section sidebar {
+    <p>Use this page to register to this blog.</p>
+}

@@ -1,15 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Welcome to about page!";
-    ViewBag.Text = "This is about page of ASP.NET powered blog!";
-    ViewBag.Page = "about";
-    
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
-@section content {
-    ttt
-}
-
 @section sidebar {
-    zzz
+    <h3>Latest posts</h3>
+    @{Html.RenderAction("PostsWidget", "Page");}
 }

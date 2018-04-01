@@ -17,10 +17,25 @@
           Menu
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <a class="dropdown-item" href="@Url.Action("Login", "Login", null)">Log In</a>
+                <a class="dropdown-item" href="@Url.Action("Register", "Login", null)">Register</a>
+            }
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="dropdown-item" href="@Url.Action("UserProfile", "Profile", null)">Profile</a>
+            
+                if (User.IsInRole("ROLE_ADMIN"))
+                {
+                    <a class="dropdown-item" href="@Url.Action("Moderate", "Admin", null)">Admin panel</a>
+                }
+            
+                <div class="dropdown-divider"></div>
+            
+                <a class="dropdown-item" href="@Url.Action("Logout", "Login", null)">Log Out</a>
+            }
         </div>
       </li>
     </ul>

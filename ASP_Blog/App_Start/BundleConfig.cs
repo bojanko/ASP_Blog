@@ -10,14 +10,13 @@ namespace ASP_Blog
         {
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/jquery-3.3.1.min.js",
-                "~/Scripts/bootstrap.min.js",
-                "~/Scripts/bootstrap.bundle.min.js"));
+                "~/Scripts/bootstrap.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/site.css",
-                "~/Content/Bootstrap/bootstrap-grid.min.css",
-                "~/Content/Bootstrap/bootstrap-reboot.min.css",
                 "~/Content/Bootstrap/bootstrap.min.css"));
+
+            BundleTable.EnableOptimizations = true;
         }
     }
 }

@@ -1,0 +1,39 @@
+﻿@model ASP_Blog.Models.PageModel
+
+@{
+    Layout = "~/Views/Shared/_AdminPageLayout.cshtml";
+}
+
+@section content {
+    @using(Html.BeginForm()){
+        @Html.AntiForgeryToken()
+        
+        <fieldset>
+            @if (ViewData.ModelState["title"] != null && ViewData.ModelState["title"].Errors.Any())
+            {
+                <div class="alert alert-danger">
+                    @Html.ValidationMessageFor(m => m.title)
+                </div>
+            }
+            <h3>@Html.LabelFor(m => m.title)</h3>
+            @Html.TextBoxFor(m => m.title, new { @class = "form-control" })
+
+            @if (ViewData.ModelState["text"] != null && ViewData.ModelState["text"].Errors.Any())
+            {
+                <br />
+                <div class="alert alert-danger">
+                @Html.ValidationMessageFor(m => m.text)
+                </div>
+            }
+            <h3>@Html.LabelFor(m => m.text)</h3>
+            @Html.TextAreaFor(m => m.text, new { @class = "form-control", rows = 8 })
+        </fieldset>
+        
+        <br />
+        <input class="btn btn-primary btn-block" type="submit" value="Edit page" />
+    }
+}
+
+@section sidebar {
+    <p>Use this page to edit blog page.</p>
+}

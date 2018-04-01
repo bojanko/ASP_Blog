@@ -1,0 +1,81 @@
+﻿@model ASP_Blog.Models.CommentModel
+
+@{
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+@using System.Text.RegularExpressions
+@helper Encoder(string str)
+{
+    str = Regex.Replace(str, @"<[^>]*>", String.Empty);
+    str = str.Replace("\r\n", "<br />").Replace("\n", "<br />").Replace("\r", "<br />");
+    @Html.Raw(str)
+}
+
+@section content {
+    <h2>@ViewBag.Post.title</h2>
+    <p>@Encoder(ViewBag.Post.text)</p>
+    
+    <br />
+    <h2>Comments</h2>
+    <br />
+
+    @foreach(var comment in ViewBag.Comments){
+        if(comment.allowed != null && comment.allowed){
+            <h3>@comment.name</h3>
+            <p>@Encoder(@comment.text)</p>
+            <br />
+        }
+    }
+
+    @if(User.Identity.IsAuthenticated){
+        <br />
+            <h2>Leave your comment</h2>
+        <br />
+        using(Html.BeginForm()){
+            @Html.AntiForgeryToken()
+        
+            <fieldset>
+                @if(ViewData.ModelState["name"] != null && ViewData.ModelState["name"].Errors.Any()){
+                    <div class="alert alert-danger">
+                        @Html.ValidationMessageFor(m => m.name)
+                    </div>
+                }
+                <h3>@Html.LabelFor(m => m.name)</h3>
+                @Html.TextBoxFor(m => m.name, new { @class = "form-control", Value = Membership.GetUser().UserName })
+
+                @if(ViewData.ModelState["email"] != null && ViewData.ModelState["email"].Errors.Any()){
+                    <br />
+                    <div class="alert alert-danger">
+                    @Html.ValidationMessageFor(m => m.email)
+                    </div>
+                }
+                <h3>@Html.LabelFor(m => m.email)</h3>
+                @Html.TextBoxFor(m => m.email, new { @class = "form-control" })
+            
+                @if (ViewData.ModelState["text"] != null && ViewData.ModelState["text"].Errors.Any())
+                {
+                    <br />
+                    <div class="alert alert-danger">
+                    @Html.ValidationMessageFor(m => m.text)
+                    </div>
+                }
+                <h3>@Html.LabelFor(m => m.text)</h3>
+                @Html.TextAreaFor(m => m.text, new { @class = "form-control", rows = 8 })
+            </fieldset>
+        
+            <br />
+            <input class="btn btn-primary btn-block" type="submit" value="Send comment" />
+        }
+    }
+    else{
+        <br />
+            <h2>Log in to comment</h2>
+        <br />
+    }
+}
+
+@section sidebar {
+    <h3>Latest posts</h3>
+    @{Html.RenderAction("PostsWidget", "Page");}
+}
