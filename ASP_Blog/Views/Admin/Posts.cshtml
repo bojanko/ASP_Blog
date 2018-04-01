@@ -1,0 +1,71 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminPageLayout.cshtml";
+}
+
+@section content {
+    @foreach(var post in ViewBag.Posts){
+        <h2>@post.title</h2>
+        
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+                <a href="@Url.Action("EditPost", "Admin", new { data = post.id })"
+                class="btn btn-primary btn-block">Edit post</a>
+                <br />
+            </div>
+            <div class="col-md-6">
+                <a href="@Url.Action("DeletePost", "Admin", new { data = post.id })"
+                class="btn btn-primary btn-block">Delete post</a>
+                <br />
+            </div>
+          </div>
+        </div>
+        
+    }
+
+    <nav aria-label="paginate_me">
+      <ul class="pagination">
+        @if(ViewBag.Paginator.getPrev() != 0){
+            <li class="page-item">
+              <a class="page-link" href="
+                  @(ViewBag.Paginator.getPrev() == 1 ? Url.Action("Posts", "Admin", null)
+                  : Url.Action("PostsPage", "Admin", new { data = ViewBag.Paginator.getPrev() }))
+              ">Previous</a>
+            </li>
+        }
+
+        @if(ViewBag.Paginator.getL1() != 0){
+            <li class="page-item@(ViewBag.Paginator.getActive() == "l1" ? " active" : "")">
+                <a class="page-link" href="
+                    @(ViewBag.Paginator.getL1() == 1 ? Url.Action("Posts", "Admin", null)
+                    : Url.Action("PostsPage", "Admin", new { data = ViewBag.Paginator.getL1() }))
+                ">
+                @ViewBag.Paginator.getL1()</a></li>
+        }
+
+        @if(ViewBag.Paginator.getL2() != 0){
+            <li class="page-item@(ViewBag.Paginator.getActive() == "l2" ? " active" : "")">
+                <a class="page-link" href="@Url.Action("PostsPage", "Admin", new { data = ViewBag.Paginator.getL2() })">
+                    @ViewBag.Paginator.getL2()</a></li>
+        }
+
+        @if(ViewBag.Paginator.getL3() != 0){
+            <li class="page-item"><a class="page-link" href="@Url.Action("PostsPage", "Admin", new { data = ViewBag.Paginator.getL3() })">
+                @ViewBag.Paginator.getL3()</a></li>
+        }
+
+        @if(ViewBag.Paginator.getNext() != 0){
+            <li class="page-item">
+              <a class="page-link" href="@Url.Action("PostsPage", "Admin", new { data = ViewBag.Paginator.getNext() })">Next</a>
+            </li>
+        }
+      </ul>
+    </nav>
+}
+
+@section sidebar {
+    <p>Use this page to manage posts on this blog.</p>
+    <br />
+    <a href="@Url.Action("NewPost", "Admin", null)"
+                class="btn btn-primary btn-block">New post</a>
+}

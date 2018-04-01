@@ -35,9 +35,14 @@ namespace ASP_Blog.Repository
             context.SaveChanges();
         }
 
-        public List<AdminRequestModel> getAllAdminRequests()
+        public AdminRequestModel getAdminRequestById(int id)
         {
-            return (from a in context.AdminRequests select a).ToList();
+            return context.AdminRequests.Find(id);
+        }
+
+        public List<AdminRequestModel> getAllPendingAdminRequests()
+        {
+            return (from a in context.AdminRequests where a.handled == false select a).ToList();
         }
 
         public bool requestExists(string username)

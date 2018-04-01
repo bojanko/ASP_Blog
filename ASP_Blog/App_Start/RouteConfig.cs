@@ -34,6 +34,13 @@ namespace ASP_Blog
                 defaults: new { controller = "Profile", action = "UserProfile", username = UrlParameter.Optional }
             );
 
+            /*ADMIN ROUTE*/
+            routes.MapRoute(
+                name: "Admin",
+                url: "Admin/{action}/{data}",
+                defaults: new { controller = "Admin", action = "Moderate", data = UrlParameter.Optional }
+            );
+
             /*PAGES ROUTE*/
             routes.MapRoute(
                 name: "Pages",

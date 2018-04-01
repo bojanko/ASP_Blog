@@ -26,7 +26,10 @@ namespace ASP_Blog.Repository
 
         public void updateComment(CommentModel c)
         {
-            context.Entry<PostModel>(c.post).State = EntityState.Unchanged;
+            if (c.post != null)
+            {
+                context.Entry<PostModel>(c.post).State = EntityState.Unchanged;
+            }
             context.Entry<CommentModel>(c).State = EntityState.Modified;
             context.SaveChanges();
         }
@@ -40,6 +43,11 @@ namespace ASP_Blog.Repository
         public CommentModel getCommentById(int id)
         {
             return context.Comments.Find(id);
+        }
+
+        public List<CommentModel> getAllNonmoderated()
+        {
+            return (from c in context.Comments where c.allowed == null select c).ToList<CommentModel>();
         }
     }
 }

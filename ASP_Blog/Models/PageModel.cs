@@ -13,12 +13,16 @@ namespace ASP_Blog.Models
         [Key]
         public int id { get; set; }
 
+        [Required]
+        [Display(Name = "Page title")]
         [Column("title", TypeName = "varchar")]
         public string title { get; set; }
 
         [Column("pagename", TypeName = "varchar")]
         public string pageName { get; set; }
 
+        [Required]
+        [Display( Name = "Page text" )]
         [Column("text", TypeName = "varchar")]
         public string text { get; set; }
     }

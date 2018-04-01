@@ -1,0 +1,30 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminPageLayout.cshtml";
+}
+
+@section content {
+    @foreach(var comment in ViewBag.Comments){
+        <h2>@comment.name</h2>
+        <p>@comment.text</p>
+        
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+                <a href="@Url.Action("ModerateAllow", "Admin", new { data = comment.id })"
+                class="btn btn-primary btn-block">Allow comment</a>
+                <br />
+            </div>
+            <div class="col-md-6">
+                <a href="@Url.Action("ModerateDeny", "Admin", new { data = comment.id })"
+                class="btn btn-primary btn-block">Deny comment</a>
+                <br />
+            </div>
+          </div>
+        </div>
+        
+    }
+}
+
+@section sidebar {
+    <p>Use this page to moderate comments.</p>
+}

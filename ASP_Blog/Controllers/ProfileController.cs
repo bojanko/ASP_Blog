@@ -23,7 +23,7 @@ namespace ASP_Blog.Controllers
         [HttpGet]
         public ActionResult UserProfile()
         {
-            if (!req_rep.requestExists(Membership.GetUser().UserName))
+            if (!Roles.IsUserInRole("ROLE_ADMIN") && !req_rep.requestExists(Membership.GetUser().UserName))
             {
                 ViewBag.AdminRequest = true;
             }
@@ -54,7 +54,7 @@ namespace ASP_Blog.Controllers
                 return RedirectToAction("UserProfile", "Profile");
             }
 
-            if (!req_rep.requestExists(Membership.GetUser().UserName))
+            if (!Roles.IsUserInRole("ROLE_ADMIN") && !req_rep.requestExists(Membership.GetUser().UserName))
             {
                 ViewBag.AdminRequest = true;
             }

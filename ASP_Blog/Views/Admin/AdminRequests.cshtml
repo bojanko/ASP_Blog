@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminPageLayout.cshtml";
+}
+
+@section content {
+    @foreach(var request in ViewBag.Requests){
+        <h2>@request.username</h2>
+        
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+                <a href="@Url.Action("AdminRequestGrant", "Admin", new { data = request.id })"
+                class="btn btn-primary btn-block">Grant request</a>
+                <br />
+            </div>
+            <div class="col-md-6">
+                <a href="@Url.Action("AdminRequestReject", "Admin", new { data = request.id })"
+                class="btn btn-primary btn-block">Reject request</a>
+                <br />
+            </div>
+          </div>
+        </div>
+        
+    }
+}
+
+@section sidebar {
+    <p>Use this page to grant admin privileges to users.</p>
+}
